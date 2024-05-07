@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: salesforce-sys-api
+protocols: [HTTPS]
+version: v1
+
+description: The Salesforce System API will be interacting with Salesforce to perform CRUD operations.
+
+baseUri: https://{baseURL}/api/{version}
+baseUriParameters:
+  baseURL:
+    description: Use the environment specific Base URL's. Production environment will not have any environment details.
+
+mediaType: application/json
+
+uses:
+  commonLib: /exchange_modules/5171e7e0-1d56-46fe-8c83-c71abc945e2a/pw-cin7-common-library/1.0.0/pw-cin7-common-library.raml
+  datatypesLib: /exchange_modules/5171e7e0-1d56-46fe-8c83-c71abc945e2a/pw-cin7-common-datatypes/1.0.3/pw-cin7-common-datatypes.raml
+
+/upsert:
+  is: [commonLib.clientIdSecret, commonLib.trackable, commonLib.errorResponses]
+  type:
+    commonLib.resources:
+      postReqDataType: 
+        type: datatypesLib.upsertRequest
+      postReqExample: !include example/upsertRequest.json
+      postRespDataType: 
+        type: datatypesLib.salesforceResponse
+      postRespExample: !include example/response.json
+
+  post: 
+    description: Upsert into Salesforce

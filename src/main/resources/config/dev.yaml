@@ -1,0 +1,17 @@
+api:
+  name: "pw-sf-sys-api"
+  layer: "system"
+  version: "v1"
+  id: ""
+  
+http:
+  basePath: "/api/v1/*"
+  port: "8081"
+  host: "0.0.0.0"
+  timeout: "30000"
+  
+salesforce:
+  username: "siddhartha.pal@nttdata.com.sachin"
+  password: "![RVbPEt/W5fMjm+DGcSzZ4g==]"
+  token: "![x6udxgMOI/W5Qk+S7xnM+ZOIMS+yhoqIQskQtxDdITY=]"
+  url: "https://principalwine--sachin.sandbox.my.salesforce.com/services/Soap/u/58.0"
