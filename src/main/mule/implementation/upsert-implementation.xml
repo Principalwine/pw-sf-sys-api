@@ -6,9 +6,9 @@
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
 	<sub-flow name="upsert-implementation-subflow" doc:id="bd4eec16-b91b-44d1-a202-be0e3f070adc" >
 		<logger level="DEBUG" doc:name="Debug: Log Outbound" doc:id="0e26bc3c-5a44-4966-8b24-4b7a73b8dd6c" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Outbound",&#10;  MetaData: "upsert request to SF",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]'/>
-		<set-payload value="#[%dw 2.0&#10;output application/java&#10;---&#10;vars.data]" doc:name="Set Payload" doc:id="7fc3ec71-e2ac-405d-8633-1a951ef0127d" />
+		<set-payload value="#[%dw 2.0&#10;output application/java&#10;---&#10;vars.data]" doc:name="Upsert Request Payload" doc:id="7fc3ec71-e2ac-405d-8633-1a951ef0127d" />
 		<salesforce:upsert objectType="#[vars.objectName]" externalIdFieldName="#[vars.externalField]" doc:id="ed32f644-5f17-44db-ad21-ec1c8c1ef175" config-ref="Salesforce_Config"/>
-		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="Set Payload" doc:id="800603d8-f18c-4cf1-9c81-e6f23cfce91d" />
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="Salesforce Response Payload" doc:id="800603d8-f18c-4cf1-9c81-e6f23cfce91d" />
 		<logger level="DEBUG" doc:name="Debug: Log Inbound" doc:id="90ab7ed1-f994-4916-b9dc-98509b792e8d" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Inbound",&#10;  MetaData: "upsert request successfull to SF",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]'/>
 		<logger level="INFO" doc:name="Info: Log Exit" doc:id="d26131d9-e530-473b-9425-4883ebf0af74" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "Log Exit",&#10;  MetaData: "upsert request to SF completed",&#10;  correlationId: correlationId,&#10;}]'/>
 	</sub-flow>
