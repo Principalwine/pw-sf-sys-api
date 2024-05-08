@@ -84,5 +84,21 @@ output application/json
                     </ee:variables>
                 </ee:transform>
             </on-error-propagate>
-            </error-handler>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="687c8df8-7443-4c66-8318-eb08dd0118a4" type="ANY">
+			<ee:transform doc:name="Error Payload" doc:id="b0993591-af93-4619-95d6-a791e6bda028" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	errorCode: error.muleMessage.typedAttributes.statusCode default 500,
+	errorDescription: error.muleMessage.typedAttributes.reasonPhrase default error.description,
+	message: vars.errorContext default "Error occurred while processing the request in teg-salesforce-sys-api"
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<logger level="INFO" doc:name="Log Error " doc:id="27040133-653c-4846-9be8-3482ce3b96d8" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "ERROR",&#10;  MetaData: "Error Occurred",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]'/>
+		</on-error-propagate>
+            
+</error-handler>
 </mule>
