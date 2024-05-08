@@ -93,7 +93,7 @@ output application/json
 {
 	errorCode: error.muleMessage.typedAttributes.statusCode default 500,
 	errorDescription: error.muleMessage.typedAttributes.reasonPhrase default error.description,
-	message: vars.errorContext default "Error occurred while processing the request in teg-salesforce-sys-api"
+	message: vars.errorContext default "Error occurred while processing the request in PW-salesforce-sys-api"
 }]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
