@@ -14,7 +14,7 @@ mediaType: application/json
 
 uses:
   commonLib: /exchange_modules/5171e7e0-1d56-46fe-8c83-c71abc945e2a/pw-cin7-common-library/1.0.0/pw-cin7-common-library.raml
-  datatypesLib: /exchange_modules/5171e7e0-1d56-46fe-8c83-c71abc945e2a/pw-cin7-common-datatypes/1.0.3/pw-cin7-common-datatypes.raml
+  datatypesLib: /exchange_modules/5171e7e0-1d56-46fe-8c83-c71abc945e2a/pw-cin7-common-datatypes/1.0.11/pw-cin7-common-datatypes.raml
 
 /upsert:
   is: [commonLib.clientIdSecret, commonLib.trackable, commonLib.errorResponses]
@@ -29,3 +29,17 @@ uses:
 
   post: 
     description: Upsert into Salesforce
+
+/query:
+  is: [commonLib.clientIdSecret, commonLib.trackable, commonLib.errorResponses]
+  type:
+    commonLib.resources:
+      postReqDataType: 
+        type: datatypesLib.queryRequest
+      postReqExample: !include example/queryRequest.json
+      postRespDataType: 
+        type: datatypesLib.salesforceResponse
+      postRespExample: !include example/response.json
+
+  post: 
+    description: Query into Salesforce
