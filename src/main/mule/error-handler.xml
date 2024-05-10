@@ -84,10 +84,25 @@ output application/json
                     </ee:variables>
                 </ee:transform>
             </on-error-propagate>
-		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="687c8df8-7443-4c66-8318-eb08dd0118a4" type="ANY">
-			<ee:transform doc:name="Error Payload" doc:id="b0993591-af93-4619-95d6-a791e6bda028" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="687c8df8-7443-4c66-8318-eb08dd0118a4" type="APP:SF-API-ERROR">
+			<ee:transform doc:name="Error Payload" doc:id="a8eba5b9-aa5c-42a8-b91f-a85df53d9980" >
 				<ee:message >
 					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	errorCode: error.muleMessage.typedAttributes.statusCode default 500,
+	errorDescription: payload.items[0].exception.message default error.description,
+	message: vars.errorContext default "Error occurred while processing the request in PW-salesforce-sys-api"
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<logger level="INFO" doc:name="Log Error " doc:id="b35af3b8-8ac0-45fe-93a0-96ec23795ea2" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "ERROR",&#10;  MetaData: "Error Occurred",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]' />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="9ab64446-c7ac-4e87-9f90-6a722b09d8d4" type="ANY">
+			<ee:transform doc:name="Error Payload" doc:id="b0993591-af93-4619-95d6-a791e6bda028">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -97,7 +112,7 @@ output application/json
 }]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
-			<logger level="INFO" doc:name="Log Error " doc:id="27040133-653c-4846-9be8-3482ce3b96d8" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "ERROR",&#10;  MetaData: "Error Occurred",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]'/>
+			<logger level="INFO" doc:name="Log Error " doc:id="27040133-653c-4846-9be8-3482ce3b96d8" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "ERROR",&#10;  MetaData: "Error Occurred",&#10;  correlationId: correlationId,&#10;  data: payload&#10;}]' />
 		</on-error-propagate>
             
 </error-handler>
