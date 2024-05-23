@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+    <apikit:config name="salesforce-sys-api-2-config" api="salesforce-sys-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <flow name="salesforce-sys-api-main">
+        <http:listener config-ref="HTTP_Listener_config" path="${http.basePath}">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <logger level="INFO" doc:name="Request Payload" doc:id="9ba49618-c03c-4694-94c9-4c3c44b49741" message="#[payload]" />
+        <apikit:router config-ref="salesforce-sys-api-2-config" />
+        <error-handler ref="Global-error-handler" />
+    </flow>
+    <flow name="post:\upsert:application\json:salesforce-sys-api-2-config">
+        <logger level="INFO" doc:name="Info: Log Entry" doc:id="d8824fdd-5bee-491d-9741-c24ac25d4e8c" message="#[%dw 2.0&#xA;output application/json&#xA;---&#xA;{&#xA;  flowName: flow.name,&#xA;  apiName: app.name,&#xA;  Name: &quot;ENTRY&quot;,&#xA;  MetaData: &quot;Started Flow in salesforce-sys-api&quot;,&#xA;  correlationId: correlationId&#xA;}]" />
+        <ee:transform doc:name="Set Var Data,  objectName and externalField" doc:id="470a6004-fe18-4091-b183-1c394b4ebe9e">
+            <ee:message />
+            <ee:variables>
+                <ee:set-variable variableName="externalField"><![CDATA[payload.externalField]]></ee:set-variable>
+                <ee:set-variable variableName="data"><![CDATA[payload.data]]></ee:set-variable>
+                <ee:set-variable variableName="objectName"><![CDATA[payload.objectName]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <flow-ref doc:name="upsert-implementation-subflow" doc:id="4b9be675-803b-4b7d-8666-f1850cce0a6f" name="upsert-implementation-subflow" />
+    </flow>
+    <flow name="post:\query:application\json:salesforce-sys-api-2-config">
+		<logger level="INFO" doc:name="Info: Log Entry" doc:id="7b31ebed-e962-4bd3-8f95-d12a634f72db" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  flowName: flow.name,&#10;  apiName: app.name,&#10;  Name: "ENTRY",&#10;  MetaData: "Started Flow in salesforce-sys-api",&#10;  correlationId: correlationId&#10;}]' />
+		<flow-ref doc:name="query-salesforce-object-implementation-flow" doc:id="3b39e719-d244-46bb-b695-02efe63765c5" name="query-salesforce-object-implementation-flow"/>
+    </flow>
+</mule>
