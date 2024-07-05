@@ -11,7 +11,10 @@ http:
   timeout: "30000"
   
 salesforce:
-  username: "siddhartha.pal@nttdata.com.sachin"
-  password: "![ItAaX7qTsEywysnn8T89eQ==]"
-  token: "![VaF4aS6gYQeAwFtFlIkTb+xzP8DRx8oNePxa6wSHz7M=]"
-  url: "https://principalwine--sachin.sandbox.my.salesforce.com/services/Soap/u/58.0"
+  username: "sameet.bhole@nttdata.com.uat"
+  password: "![kBzmZcM+8uDoYnf29SyNkA==]"
+  token: "![3u4MDhoUfnhrtkSHOs2+XyeMox7Hw7ZvQzLdz5Dt6kk=]"
+  url: "https://principalwine--uat.sandbox.my.salesforce.com/services/Soap/u/58.0"
+  reconnectionStrategy:
+    frequency: "5000"
+    attempts: "2"
