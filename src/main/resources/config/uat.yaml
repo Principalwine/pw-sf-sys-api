@@ -15,3 +15,6 @@ salesforce:
   password: "![kBzmZcM+8uDoYnf29SyNkA==]"
   token: "![3u4MDhoUfnhrtkSHOs2+XyeMox7Hw7ZvQzLdz5Dt6kk=]"
   url: "https://principalwine--uat.sandbox.my.salesforce.com/services/Soap/u/58.0"
+  reconnectionStrategy:
+    frequency: "5000"
+    attempts: "2"
