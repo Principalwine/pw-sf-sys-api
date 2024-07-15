@@ -11,9 +11,9 @@ http:
   timeout: "30000"
   
 salesforce:
-  username: "sameet.bhole@nttdata.com.uat"
+  username: "sachin26.sharma@nttdata.com.muleuat"
   password: "![kBzmZcM+8uDoYnf29SyNkA==]"
-  token: "![3u4MDhoUfnhrtkSHOs2+XyeMox7Hw7ZvQzLdz5Dt6kk=]"
+  token: "![i8tUVeHhS9YHcA4jBistJTpw1z0Y4ZpKYuq4aLZz6Mo=]"
   url: "https://principalwine--uat.sandbox.my.salesforce.com/services/Soap/u/58.0"
   reconnectionStrategy:
     frequency: "5000"

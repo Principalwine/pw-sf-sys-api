@@ -1,0 +1,20 @@
+api:
+  name: "pw-sf-sys-api"
+  layer: "system"
+  version: "v1"
+  id: "19717203"
+  
+http:
+  basePath: "/api/v1/*"
+  port: "8081"
+  host: "0.0.0.0"
+  timeout: "30000"
+  
+salesforce:
+  username: "sachin26.sharma@nttdata.com"
+  password: "![ax5wJJG6HjmdhZl7+YJwhQ==]"
+  token: "![+VYZm/eTM7U0IfN3tW6D8UANT1k1iq8RU6l0E4GGSAc=]"
+  url: "https://principalwine.my.salesforce.com/services/Soap/u/58.0"
+  reconnectionStrategy:
+    frequency: "5000"
+    attempts: "2"
